@@ -32,22 +32,22 @@ body {
    NEW 3-COLUMN HERO HEADER
 ====================================== */
 .hero {
-    display: grid;
-    grid-template-columns: 2.5fr 1fr 1fr;
-    gap: 2rem;
-    align-items: center;
-    width: 100%;
-    padding: 2.5rem 0 0rem;
-    border-bottom: 2px solid #00000008;
+  display: grid;
+  grid-template-columns: 2.5fr 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  width: 100%;
+  padding: 2.5rem 0 0rem;
+  border-bottom: 2px solid #00000008;
 }
 
 /* LEFT BLOCK ========================= */
 .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  align-items: flex-start;
 }
 
 .hero-left h1 {
@@ -65,12 +65,12 @@ body {
   line-height: 1.45;
 }
 
-  .hero-left h3 {
+.hero-left h3 {
   font-size: 1.5;
   font-weight: 400;
   color: #475569;
   line-height: 1.45;
-  }
+}
 
 /* MIDDLE BLOCK (CONTACT INFO) ========= */
 .hero-middle {
@@ -170,7 +170,8 @@ body {
 .filter-bar input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  accent-color: white; /* ensures clear tick */
+  accent-color: white;
+  /* ensures clear tick */
   cursor: pointer;
 }
 
@@ -302,7 +303,8 @@ body {
   }
 
   .hero-left h1 {
-    font-size: 2.4rem;
+    font-size: 2rem;
+    align-self: anchor-center;
     line-height: 1.15;
   }
 
@@ -312,7 +314,7 @@ body {
     margin: 0 auto;
   }
 
-    .hero-left h3 {
+  .hero-left h3 {
     font-size: 1.05rem;
     max-width: 90%;
     margin: 0 auto;
@@ -323,7 +325,7 @@ body {
   }
 
   .hero-right {
-    display:none;
+    display: none;
   }
 
   /* Grid = one tile */
