@@ -299,7 +299,8 @@ body {
   .hero {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 2rem;
+    gap: 1rem;
+    padding: 20px;
   }
 
   .hero-left h1 {
