@@ -149,10 +149,14 @@ function applyFilter() {
     }
 
     const imgs = card.querySelectorAll(".image-frame img");
-    imgs.forEach((img, imgIndex) => {
+    imgs.forEach(img => {
       img.addEventListener("click", (e) => {
-        e.stopPropagation(); // prevent arrow clicks triggering preview
-        openModal(item.images, imgIndex);
+        e.stopPropagation();
+
+        const imgsArr = [...imgs];
+        const activeIndex = imgsArr.findIndex(im => im.classList.contains("active"));
+
+        openModal(item.images, activeIndex >= 0 ? activeIndex : 0);
       });
     });
   });
