@@ -39,6 +39,7 @@ body {
   width: 100%;
   padding: 2.5rem 0 0rem;
   border-bottom: 2px solid #00000008;
+  margin-bottom: 15px;
 }
 
 /* LEFT BLOCK ========================= */
@@ -66,7 +67,7 @@ body {
 }
 
 .hero-left h3 {
-  font-size: 1.5;
+  font-size: 1.5rem;
   font-weight: 400;
   color: #475569;
   line-height: 1.45;
@@ -79,6 +80,83 @@ body {
   justify-content: center;
   gap: 0.35rem;
   color: #334155;
+}
+
+/* FREE TOGGLE SECTION ========================= */
+
+.free-toggle-wrapper {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.free-toggle-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.6rem;
+  margin-right: 0.75rem;
+  border-right: 2px solid #e2e8f0;
+}
+
+/* Toggle base */
+.free-toggle-btn {
+  position: relative;
+  width: 78px;
+  height: 32px;
+  background: #f8fafc;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s ease;
+  outline: 2px solid #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Slider circle */
+.free-toggle-btn .slider {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 50%;
+  transition: left 0.25s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ACTIVE STATE — moves slider + changes bg */
+.free-toggle-btn.on {
+  background: #10b981;
+}
+
+.free-toggle-btn.on .slider {
+  left: 48px;
+}
+
+.free-toggle-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e293b;
+  opacity: 1;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: opacity .25s ease;
+  font-family: "Inter", sans-serif;
+}
+
+.free-toggle-btn.on .free-toggle-text {
+  opacity: 0;
 }
 
 .hero-middle .label {
@@ -135,44 +213,42 @@ body {
    FILTER
 ====================================== */
 .filter-bar {
-  margin: 1rem 0;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
-  color: #374151;
+  margin-bottom: 1rem;
+  gap: 2rem;
 }
 
-.filter-bar label {
+/* Pill-style filter button */
+.label-filter {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-
-  padding: 6px 14px;
-  background: linear-gradient(135deg, #2563eb, #4f46e5);
-  color: white;
-
-  font-size: 0.9rem;
-  font-weight: 600;
-
+  padding: 6px 18px;
   border-radius: 999px;
+  background: white;
+  border: none;
+  outline: 2px solid #d1d5db;
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
-
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-  transition: all 0.2s ease;
+  transition: none;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  user-select: none;
 }
 
-.filter-bar label:hover {
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
-  transform: translateY(-1px);
+.label-filter.active {
+  background: white;
+  color: #1e293b;
+  outline: 2px solid #4f46e5;
 }
 
-.filter-bar input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: white;
-  /* ensures clear tick */
-  cursor: pointer;
+.label-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0 0 .2rem;
 }
 
 /* ======================================
@@ -301,11 +377,12 @@ body {
     text-align: center;
     gap: 1rem;
     padding: 20px;
+    margin-bottom: 5px;
   }
 
   .hero-left h1 {
     font-size: 2rem;
-    align-self: anchor-center;
+    align-self: center;
     line-height: 1.15;
   }
 
@@ -327,6 +404,17 @@ body {
 
   .hero-right {
     display: none;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 20px;
+    padding: 10px 0;
+  }
+
+  .label-filter-container {
+    justify-content: center;
   }
 
   /* Grid = one tile */
@@ -353,4 +441,28 @@ body {
   .whatsapp-cta a {
     font-size: 0.9rem;
   }
+}
+
+
+/* ======================================
+   SOLD BANNER
+====================================== */
+.sold-banner {
+  position: absolute;
+  top: 12px;
+  right: -40px;
+  width: 160px;
+
+  transform: rotate(45deg);
+  background: #dc2626;
+  color: white;
+
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+
+  padding: 0.4rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  z-index: 50;
 }

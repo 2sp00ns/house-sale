@@ -1,11 +1,19 @@
 let fullList = [];
 
+// Hide filter bar until labels load
+document.addEventListener("DOMContentLoaded", () => {
+  const fb = document.querySelector(".filter-bar");
+  if (fb) fb.style.display = "none";
+});
+
 // Load listings from Google Apps Script web app API
 async function loadListings() {
   try {
     const res = await fetch(API_URL);
     const list = await res.json();
     fullList = list;
+    buildLabelFilters(list);
+    setupFreeToggle();
     applyFilter();
   } catch (err) {
     document.getElementById("grid").innerHTML =
@@ -13,13 +21,74 @@ async function loadListings() {
   }
 }
 
+function buildLabelFilters(list) {
+  const container = document.getElementById("labelFilters");
+  if (!container) return;
+
+  const allLabels = new Set();
+  list.forEach(item => {
+    if (item.labels) {
+      item.labels.forEach(l => allLabels.add(l));
+    }
+  });
+
+  allLabels.forEach(label => {
+    const btn = document.createElement("button");
+    btn.className = "label-filter";
+    btn.textContent = label;
+    btn.dataset.label = label.toLowerCase();
+    btn.onclick = () => {
+      btn.classList.toggle("active");
+      applyFilter();
+    };
+    container.appendChild(btn);
+  });
+
+  // Show filter bar now that labels are ready
+  const fb = document.querySelector(".filter-bar");
+  if (fb) fb.style.display = "flex";
+}
+
 function applyFilter() {
   const grid = document.getElementById("grid");
-  const onlyFree = document.getElementById("filterFree").checked;
 
-  const filtered = onlyFree
-    ? fullList.filter(i => i.price.trim().toLowerCase() === "free")
-    : fullList;
+  const showFreeOnly = document.getElementById("freeToggle").classList.contains("on");
+
+  const activeLabels = [...document.querySelectorAll(".label-filter.active")]
+    .map(b => b.dataset.label);
+
+  let filtered = fullList.slice();
+
+  const selectedCats = activeLabels;
+
+  filtered = fullList.filter(item => {
+    const isItemFree = item.price.trim().toLowerCase() === "free";
+    const matchesFree = showFreeOnly ? isItemFree : true;
+
+    if (selectedCats.length === 0) {
+      return matchesFree;
+    }
+
+    const itemCats = item.labels.map(l => l.toLowerCase());
+    const matchesCats = selectedCats.some(l => itemCats.includes(l));
+
+    return matchesFree && matchesCats;
+  });
+
+  filtered.sort((a, b) => {
+    const aSold = a.sold ? 1 : 0;
+    const bSold = b.sold ? 1 : 0;
+    if (aSold !== bSold) return aSold - bSold;
+
+    const aFree = a.price.trim().toLowerCase() === "free";
+    const bFree = b.price.trim().toLowerCase() === "free";
+    if (aFree && !bFree) return 1;
+    if (!aFree && bFree) return -1;
+
+    const aNum = parseFloat(a.price) || 0;
+    const bNum = parseFloat(b.price) || 0;
+    return bNum - aNum;
+  });
 
   grid.innerHTML = "";
 
@@ -49,7 +118,8 @@ function applyFilter() {
           <button class="arrow left">❮</button>
           <button class="arrow right">❯</button>
         ` : ""}
-        <div class="price-overlay ${isFree ? "free" : ""}">${displayPrice}</div>
+        ${item.sold ? "" : `<div class="price-overlay ${isFree ? "free" : ""}">${displayPrice}</div>`}
+        ${item.sold ? `<div class="sold-banner">SOLD</div>` : ""}
       </div>
       <div class="info">
         <p class="name">${item.name}</p>
@@ -79,6 +149,19 @@ function applyFilter() {
   });
 }
 
-document.getElementById("filterFree").addEventListener("change", applyFilter);
-
 loadListings();
+
+function setupFreeToggle() {
+  const toggle = document.getElementById("freeToggle");
+  if (!toggle) return;
+
+  toggle.addEventListener("click", () => {
+    // Toggle state on the actual toggle button
+    const isOn = toggle.classList.toggle("on");
+
+    // Update ARIA for accessibility
+    toggle.setAttribute("aria-pressed", isOn ? "true" : "false");
+
+    applyFilter();
+  });
+}

@@ -39,7 +39,7 @@
         <div class="text">Herengracht 178, 1016BR</div>
 
         <div class="label" style="margin-top: 1rem;">Contact</div>
-        <a href="tel:+31634294145">+31 6 3429 4145</a>
+        <a href="tel:+31634294145" class="phone-number">+31 6 3429 4145</a>
 
         <div class="whatsapp-cta">
           <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="">
@@ -54,10 +54,13 @@
 
     <!-- FILTER -->
     <div class="filter-bar">
-      <label>
-        <input type="checkbox" id="filterFree" />
-        FREE
-      </label>
+      <div class="free-toggle-wrapper">
+        <button id="freeToggle" class="free-toggle-btn" aria-pressed="false">
+          <span class="free-toggle-text">Free</span>
+          <span class="slider"></span>
+        </button>
+      </div>
+      <div id="labelFilters" class="label-filter-container"></div>
     </div>
 
     <!-- GRID -->
@@ -65,8 +68,7 @@
   </div>
 
   <script>
-    // 🔥 REPLACE THIS WITH YOUR EXEC URL
-    const API_URL = "https://script.google.com/macros/s/AKfycbym_bpH214vdS9NXw05ogaFFRKA13H4T2ten-RmjQget79ERgSIoTfLMtTUhtWN5PgQiQ/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbzoQKlsQNYrEnGd6S1r9H9e4biO_djUNpLw2Gt6vxYqscT-LQiBt6WBQwpz8NrUspKDFg/exec";
   </script>
 
   <script src="app.js"></script>
