@@ -4,6 +4,7 @@ let fullList = [];
 document.addEventListener("DOMContentLoaded", () => {
   const fb = document.querySelector(".filter-bar");
   if (fb) fb.style.display = "none";
+  initModal();
 });
 
 // Load listings from Google Apps Script web app API
@@ -146,10 +147,77 @@ function applyFilter() {
         show(index);
       };
     }
+
+    const imgs = card.querySelectorAll(".image-frame img");
+    imgs.forEach((img, imgIndex) => {
+      img.addEventListener("click", (e) => {
+        e.stopPropagation(); // prevent arrow clicks triggering preview
+        openModal(item.images, imgIndex);
+      });
+    });
   });
 }
 
 loadListings();
+
+let modal, modalImg, modalClose, modalPrev, modalNext, currentModalImages, currentModalIndex;
+function initModal() {
+  modal = document.getElementById("imageModal");
+  modal.classList.add("image-modal");
+  modalImg = document.getElementById("modalImage");
+  modalClose = document.getElementById("modalCloseBtn");
+  modalPrev = document.getElementById("modalPrevBtn");
+  modalNext = document.getElementById("modalNextBtn");
+
+  if (modalClose) {
+    modalClose.onclick = closeModal;
+  }
+  if (modalPrev) {
+    modalPrev.onclick = () => {
+      if (!currentModalImages) return;
+      currentModalIndex = (currentModalIndex - 1 + currentModalImages.length) % currentModalImages.length;
+      modalShow(currentModalIndex);
+    };
+  }
+  if (modalNext) {
+    modalNext.onclick = () => {
+      if (!currentModalImages) return;
+      currentModalIndex = (currentModalIndex + 1) % currentModalImages.length;
+      modalShow(currentModalIndex);
+    };
+  }
+  if (modal) {
+      modal.addEventListener("click", (e) => {
+          if (e.target.classList.contains("modal")) closeModal();
+      });
+  }
+}
+
+function openModal(images, startIndex) {
+  if (!modal || !modalImg) return;
+  currentModalImages = images;
+  // Hide modal arrows if only one image
+  if (modalPrev && modalNext) {
+    const showArrows = images.length > 1;
+    modalPrev.style.display = showArrows ? "flex" : "none";
+    modalNext.style.display = showArrows ? "flex" : "none";
+  }
+  currentModalIndex = startIndex;
+  modal.classList.add("active");
+  modalShow(currentModalIndex);
+}
+
+function closeModal() {
+  if (!modal) return;
+  modal.classList.remove("active");
+  currentModalImages = null;
+  currentModalIndex = null;
+}
+
+function modalShow(idx) {
+  if (!currentModalImages || !modalImg) return;
+  modalImg.src = currentModalImages[idx];
+} 
 
 function setupFreeToggle() {
   const toggle = document.getElementById("freeToggle");

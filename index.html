@@ -71,7 +71,21 @@
     const API_URL = "https://script.google.com/macros/s/AKfycbzoQKlsQNYrEnGd6S1r9H9e4biO_djUNpLw2Gt6vxYqscT-LQiBt6WBQwpz8NrUspKDFg/exec";
   </script>
 
+  <!-- IMAGE PREVIEW MODAL -->
+  <div id="imageModal" class="modal hidden">
+    <div class="modal-content">
+
+      <button class="modal-close" id="modalCloseBtn">✕</button>
+
+      <button class="modal-arrow left" id="modalPrevBtn">❮</button>
+      <img id="modalImage" src="" alt="Preview">
+      <button class="modal-arrow right" id="modalNextBtn">❯</button>
+
+    </div>
+  </div>
+
   <script src="app.js"></script>
+
 </body>
 
 </html>
