@@ -1,4 +1,5 @@
 # House-Sale Listing App
+## Simple set up / static webpage
 
 Use a google sheet to manage selling your things / create a simple static website to share
 
